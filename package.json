@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.5",
     "material-ui": "^0.20.0",
+    "mobx": "^4.1.1",
+    "mobx-react": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17",

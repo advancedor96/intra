@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+import _ from 'lodash';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import AppStore from '../stores/AppStore.js';
+
 const styles = {
    wrapper: {
-      padding: '30px',
+      marginTop: '10px'
    },
    card: {
       display: 'inline-block',
-      width: '250px', 
+      width: '250px',
       height: '250px',
       marginRight: '40px',
       marginBottom: '40px',
@@ -15,31 +19,38 @@ const styles = {
 }
 class Category extends Component {
    render() {
-      return (
-         <React.Fragment>
-            <div style={styles.wrapper}>
-            <Card style={styles.card} >
-               <CardMedia style={{height: '150px', backgroundColor: 'lightgray'}}
-               ><img src="images/nature-600-337.jpg" alt="" />
-               </CardMedia>
-               <CardTitle title="所有人員" subtitle="通訊錄、訂便當系統……" />
-            </Card>
-            <Card style={styles.card} >
-               <CardMedia style={{height: '150px', backgroundColor: 'lightgray'}}
-               ><img src="images/nature-600-337.jpg" alt="" />
-               </CardMedia>
-               <CardTitle title="人資" subtitle="考勤判讀系統" />
-            </Card>
-            <Card style={styles.card} >
-               <CardMedia style={{height: '150px', backgroundColor: 'lightgray'}}
-               ><img src="images/nature-600-337.jpg" alt="" />
-               </CardMedia>
-               <CardTitle title="專科護理師" subtitle="排班、預約休假" />
-            </Card>
-            </div>
-         </React.Fragment>
-      );
+      if (!_.isEmpty(AppStore.searchStr)) {
+         if(!_.isEmpty(AppStore.resultList)){
+            return _.map(AppStore.resultList, (e, idx)=>{
+               return(
+                  <Card key={idx}>
+                     <CardTitle title={e.name} subtitle={e.url} />
+                  </Card>
+               )
+            })
+         }else{
+            return <span>找不到"{AppStore.searchStr}"的搜尋結果</span>;
+         }  
+      } else {
+         return (
+            <React.Fragment>
+               <div style={styles.wrapper}>
+                  {
+                     _.map(AppStore.categories, (e, idx) => {
+                        return (
+                           <Card style={styles.card} key={idx}>
+                              <CardMedia style={{ height: '150px', backgroundColor: 'lightgray' }}
+                              ><img src={e.image} alt="" />
+                              </CardMedia>
+                              <CardTitle title={e.title} subtitle={e.brief} />
+                           </Card>)
+                     })
+                  }
+               </div>
+            </React.Fragment>
+         );
+      }
    }
 }
 
-export default Category;
+export default observer(Category);
