@@ -6,8 +6,8 @@ const styles = {
    },
    card: {
       display: 'inline-block',
-      width: '300px', 
-      height: '300px',
+      width: '250px', 
+      height: '250px',
       marginRight: '40px',
       marginBottom: '40px',
       cursor: 'pointer',

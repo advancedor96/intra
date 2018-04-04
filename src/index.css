@@ -5,3 +5,9 @@ body {
   box-sizing: border-box;
   background-color: #5B69BC;
 }
+
+.SearchBar::before{
+  content: '放大鏡';
+  position: absolute;
+  
+}
