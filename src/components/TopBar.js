@@ -58,11 +58,11 @@ class TopBar extends Component {
             {/* <ToolbarTitle text="入口"  style={styles.Title}/> */}
             <SearchBar>
                <img src={searchIcon} alt='search' style={{ width: '20px' }} />
-               <SearchBarInput placeholder="輸入任意字詞來查詢" value={AppStore.searchStr} onChange={(e)=>{AppStore.setSearchStr(e.target.value)}}/>
-               <XButton onClick={(e)=>{AppStore.setSearchStr('')}}>×</XButton>
+               <SearchBarInput innerRef={(search) => { this.input = search }} placeholder="輸入任意字詞來查詢" onChange={(e)=>{AppStore.setSearchStr(e.target.value)}}/>
+               <XButton onClick={(e)=>{this.input.value = ''; AppStore.setSearchStr('')}}>×</XButton>
             </SearchBar>
 
-            <RaisedButton label="智慧搜尋" primary={true} style={{ marginLeft: '30px', height: '36px' }} buttonStyle={{ lineHeight: '36px', backgroundColor:'#233396' }} />
+            <RaisedButton label="智慧搜尋" primary={true} style={{ marginLeft: '30px', height: '36px' }} buttonStyle={{ lineHeight: '36px', backgroundColor:'#233396'}}  onClick={(e)=>{AppStore.setSearchStr(this.input.value)}}/>
          </Toolbar>
 
       );
