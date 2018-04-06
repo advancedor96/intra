@@ -54,7 +54,7 @@ class Category extends Component {
          if (!_.isEmpty(AppStore.resultList)) {
             return _.map(AppStore.resultList, (e, idx) => {
                return (
-                  <Card key={idx} style={{maxWidth: 'calc(100% - 250px)'}}>
+                  <Card key={idx} style={{maxWidth: 'calc(100% - 250px)', overflow:'hidden', maxHeight: '98px'}}>
                      <CardTitle title={<span>{e.name}{<Goto url={e.url} />}</span>} subtitle={e.url}/>
                   </Card>
                )

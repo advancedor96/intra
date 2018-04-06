@@ -13,7 +13,7 @@ const SearchBar = styled.div`
    max-width: calc(100% - 250px);
    /* width: 90vw; */
    min-width: 248px;
-   width: 1000px;
+   width: 100%;
    height: 40px;
    min-height: 40px;
    line-height: 40px;
