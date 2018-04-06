@@ -28,7 +28,7 @@ AppStore.setSearchStr = action((newStr) => {
       let reg = new RegExp(searchArr.join('.*'));
       let resultarr = [];
       for (let i = 0; i < AppStore.urls.length; i++) {
-         if (reg.exec(AppStore.urls[i].name.toLowerCase()) || reg.exec(AppStore.urls[i].url.toLowerCase())) {
+         if (reg.exec(AppStore.urls[i].name.toLowerCase()) || reg.exec(AppStore.urls[i].tags.join("").toLowerCase())) {
             resultarr.push(AppStore.urls[i]);
          }
       }

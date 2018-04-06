@@ -3,7 +3,8 @@ import { observer } from 'mobx-react';
 import _ from 'lodash';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import AppStore from '../stores/AppStore.js';
-
+import goto from '../images/goto.png';
+import ReactTooltip from 'react-tooltip'
 const styles = {
    wrapper: {
       marginTop: '10px'
@@ -30,13 +31,21 @@ class Goto extends Component {
       var msg = successful ? 'successful' : 'unsuccessful';
       console.log('Fallback: Copying text command was ' + msg);
    }
+   aStyle = ()=>({
+         marginLeft: '8px',
+         display: 'inline-block',
+         verticalAlign: 'middle',
+         width: '24px',
+   })
    render() {
       return(
-      <span style={{ position: 'absolute', top: '0', right: '0' }}>
-         <a href={this.props.url}><button>前往</button></a>
-         {/* <button onClick={this.handleCopy}>Copy Link</button> */}
-      </span>)
-   }
+            <a href={this.props.url} style={this.aStyle()} data-tip data-for='goTo'>
+                  <img src={goto} alt="按我前往" style={{width: '100%'}} />
+                  <ReactTooltip id='goTo'>
+                        <span>按我前往</span>
+                  </ReactTooltip>
+            </a>
+      )}
 }
 
 class Category extends Component {
@@ -45,8 +54,8 @@ class Category extends Component {
          if (!_.isEmpty(AppStore.resultList)) {
             return _.map(AppStore.resultList, (e, idx) => {
                return (
-                  <Card key={idx}>
-                     <CardTitle title={e.name} subtitle={e.url} children={<Goto url={e.url} />} />
+                  <Card key={idx} style={{maxWidth: 'calc(100% - 250px)'}}>
+                     <CardTitle title={<span>{e.name}{<Goto url={e.url} />}</span>} subtitle={e.url}/>
                   </Card>
                )
             })
