@@ -42,7 +42,7 @@ class Goto extends Component {
             <a href={this.props.url} style={this.aStyle()} data-tip data-for='goTo'>
                   <img src={goto} alt="按我前往" style={{width: '100%'}} />
                   <ReactTooltip id='goTo'>
-                        <span>按我前往</span>
+                        <span>按下前往</span>
                   </ReactTooltip>
             </a>
       )}

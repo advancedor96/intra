@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const Layout = styled.div`
   min-height: 100vh;
   padding: 25px;
+  box-sizing: border-box;
 `
 class App extends Component {
   componentWillMount(){
