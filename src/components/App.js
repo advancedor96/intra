@@ -7,7 +7,7 @@ import AppStore from '../stores/AppStore';
 import styled from 'styled-components';
 const Layout = styled.div`
   min-height: 100vh;
-  padding: 25px;
+  padding: 25px 65px;
   box-sizing: border-box;
 `
 class App extends Component {
