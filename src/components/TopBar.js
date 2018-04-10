@@ -62,7 +62,12 @@ class TopBar extends Component {
                <XButton onClick={(e)=>{this.input.value = ''; AppStore.setSearchStr('')}}>×</XButton>
             </SearchBar>
 
-            <RaisedButton label="智慧搜尋" primary={true} style={{ marginLeft: '30px', height: '36px' }} buttonStyle={{ lineHeight: '36px', backgroundColor:'#233396'}}  onClick={(e)=>{AppStore.setSearchStr(this.input.value)}}/>
+            <RaisedButton label="智慧搜尋" primary={true} 
+               style={{ marginLeft: '30px', height: '40px' }} 
+               buttonStyle={{ lineHeight: '40px', backgroundColor:'#233396'}}  
+               labelStyle={{fontSize:'1.2rem', letterSpacing: '2px', fontWeight: '400'}}
+               onClick={(e)=>{AppStore.setSearchStr(this.input.value)}
+            }/>
          </Toolbar>
 
       );

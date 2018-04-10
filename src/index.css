@@ -1,8 +1,15 @@
+
+@import url('./notosanstc.css');
+*{
+
+  font-family: 'Noto Sans TC', 'Roboto', 'sans-serif' !important;
+}
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   box-sizing: border-box;
+  font-weight: 400;
 
   /* background-color: #5B69BC; */
   overflow-x: scroll;
@@ -10,6 +17,7 @@ body {
   background-position: center center;
   background-size: cover;
 }
+
 #root{
   /* background-color: #5B69BC; */
   background: linear-gradient(-135deg, rgba(148,162,223,1),rgba(78,92,180,1))
