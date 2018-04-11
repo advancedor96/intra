@@ -4,7 +4,9 @@ import _ from 'lodash';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import AppStore from '../stores/AppStore.js';
 import goto from '../images/goto.png';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
+import '../hover.css';
+
 const styles = {
    wrapper: {
       marginTop: '10px'
@@ -50,12 +52,23 @@ class Goto extends Component {
 
 class Category extends Component {
    render() {
+      let randomNumber = Math.floor(Math.random() * 3) + 1 ;
+      // console.log('randomNumber:',randomNumber);
+      let hoverStyle = '';
+      if(randomNumber === 1){
+            hoverStyle = "hvr-bounce-to-right";
+      }else if(randomNumber === 2){
+            hoverStyle = "hvr-radial-out";
+      }else if(randomNumber === 3){
+            hoverStyle = "hvr-grow-shadow";
+      }
+
       if (!_.isEmpty(AppStore.searchStr) || !_.isEmpty(AppStore.resultList)) {
          if (!_.isEmpty(AppStore.resultList)) {
             return _.map(AppStore.resultList, (e, idx) => {
                return (
-                  <Card key={idx} style={{maxWidth: 'calc(100% - 250px)', overflow:'hidden', maxHeight: '98px', cursor: 'pointer'}}>
-                     <CardTitle title={<span>{e.name}{<Goto url={e.url} />}</span>} subtitle={e.url} onClick={()=>{window.location.assign(e.url);}}/>
+                  <Card className={hoverStyle} key={idx} style={{maxWidth: 'calc(100% - 250px)', overflow:'hidden', maxHeight: '98px', cursor: 'pointer', display: 'block'}}>
+                     <CardTitle title={e.name} subtitle={e.url} onClick={()=>{window.location.assign(e.url);}} titleColor="inherit" subtitleColor="inherit" />
                   </Card>
                )
             })

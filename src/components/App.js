@@ -7,6 +7,9 @@ import AppStore from '../stores/AppStore';
 import styled from 'styled-components';
 const Layout = styled.div`
   min-height: 100vh;
+  min-width: 560px;
+  max-width: 1210px;
+  margin: 0 auto;
   padding: 25px 65px;
   box-sizing: border-box;
 `
@@ -18,7 +21,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <Layout>
-          <TopBar style={{marginTop: '20vh'}}/>
+          <TopBar style={{marginTop: '20vh', marginBottom: '4vh'}}/>
           <Category />
         </Layout>
       </MuiThemeProvider>
