@@ -1,0 +1,20 @@
+.Bar{
+   height:45px;
+   font-size:22px;
+   display: flex;
+   justify-content: space-between;
+}
+.logo{
+   cursor: pointer;
+   
+}
+.User{
+   height: 100%;
+	background-color: #493F6B;
+	font-size:20px;
+	color: white;
+	display: flex;
+	align-items: center;
+	padding: 0 12px;
+	cursor: pointer;
+}

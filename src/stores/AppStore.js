@@ -1,105 +1,112 @@
 import { observable, action } from 'mobx';
 import * as mobx from 'mobx';
 import _ from 'lodash';
+import axios from 'axios';
+
 var AppStore = observable({
+   userInfo: {},
    categories: [],
    urls: [],
    searchStr: '',
-   resultList: [],
+   resultUrls: [],
+   select_group: '',
 });
 
-// let a = ['aa'];
 
-// console.log(   a.findIndex( (e)=>{return e==='aa'})   );
-// console.log(   _.findIndex(a,  (e)=>{ return e==='aa'})   );
+AppStore.setObs = action((key, value) => {
+   AppStore[key] = value;
+   console.log(`AppStore[${key}]:`, AppStore[key]);
+})
 
+AppStore.getUserInfo = () => {
+   fetch('https://staff.kfsyscc.org/userinfo', {
+      credentials: 'include',
+      headers: new Headers({ 'Accept': 'application/json' })
+   })
+      .then((response) => {
+         if (!response.ok) throw new Error('抓身份發生錯誤')
+         return response.json()
+      })
+      .then((json) => {
+         if (json.status === 'true') {
+            AppStore.setObs('userInfo', json.user);
+            // AppStore.userInfo = json.user;
+            //以後用  AppStore.userInfo.NAME_CH 為中文姓名，AppStore.userInfo.USER_ID 為員工編號
+            AppStore.loadData(json.user.USER_ID);
+         } else {
+            console.warn('無法取得登入資訊');
+            // window.location.assign('https://staff.kfsyscc.org/signin/index.html?next=' + window.location.href);
+         }
+      })
+      .catch((e) => {
+         alert('錯誤:', e);
+         console.log('錯誤:', e);
+      })
+}
 
-
+//在快速搜尋輸入框打字
 AppStore.setSearchStr = action((newStr) => {
-   AppStore.resultList = [];
-   AppStore.searchStr = newStr.toLowerCase();
-   // console.log('新搜尋str:',newStr);
+   AppStore.searchStr = newStr; //保留原大小寫
+   AppStore.setSelectGroup('');
 
-   // let textArr = AppStore.urls.map((e)=>{
-   //    return e.name + e.url;
-   // });
-   if (AppStore.searchStr !== '') {
-      let searchArr = AppStore.searchStr.split('');
+   let searchStr = newStr.toLowerCase();
+
+   if (searchStr !== '') {
+      AppStore.resultUrls = [];
+      let searchArr = searchStr.split('');
       let reg = new RegExp(searchArr.join('.*'));
       let resultarr = [];
       for (let i = 0; i < AppStore.urls.length; i++) {
-         if (reg.exec(AppStore.urls[i].name.toLowerCase()) || reg.exec(AppStore.urls[i].tags.join("").toLowerCase())) {
+         if (reg.exec(AppStore.urls[i].name.toLowerCase()) ||
+            reg.exec(AppStore.urls[i].group.toLowerCase()) ||
+            reg.exec(AppStore.urls[i].tags.join("").toLowerCase()) ||
+            reg.exec(AppStore.urls[i].url.slice(26))
+         ) {
             resultarr.push(AppStore.urls[i]);
          }
       }
-      AppStore.resultList = resultarr.slice();
+      AppStore.resultUrls = resultarr.slice();
+   }else{
+      AppStore.resultUrls = AppStore.urls;
    }
-   // console.log('resultarr :',JSON.stringify(mobx.toJS(AppStore.resultList)));
 
 
 });
 
-AppStore.showTag = action((tag) => {
-   AppStore.resultList = _.filter(AppStore.urls, (e, idx) => {
-      if (_.findIndex(e.tags, (e) => { return e === tag }) !== -1) {
-         return true;
-      } else {
-         return false;
-      }
-   });
 
+//載入所有超連結
+AppStore.loadData = (userId) => {
+   axios.post('https://staff.kfsyscc.org/hrapi/service', {
+      "api": "getEntryListForLandingPage",
+      "empno": userId
+   })
+      .then(data => {
+         if (_.has(data, 'data.data')) {
+            AppStore.setObs('urls', _.get(data, 'data.data'))
+            AppStore.setObs('resultUrls', _.get(data, 'data.data'))
 
-});
-AppStore.loadData = action(() => {
-   AppStore.categories = [
-      {
-         title: "所有人員",
-         brief: '通訊錄、訂便當系統……',
-         image: './images/ALL.png'
-      },
-      {
-         title: "人資",
-         brief: '考勤判讀系統',
-         image: './images/HR.png'
-      },
-      {
-         title: "專科護理師",
-         brief: '排班、預約休假',
-         image: './images/ANP@2x.png'
-      },
-   ];
+            //把各個 URL 的group 抓出來做成陣列，存到 categories 裡
 
-   AppStore.urls = [
-      {
-         name: '訂便當系統',
-         url: 'https://staff.kfsyscc.org/eat/',
-         tags: ['所有人員', '營養室']
-      },
-      {
-         name: '通訊錄',
-         url: 'https://staff.kfsyscc.org/contacts/',
-         tags: ['所有人員']
-      },
-      {
-         name: '考勤判讀系統',
-         url: 'https://staff.kfsyscc.org/hr/attendanceCheck/',
-         tags: ['人資']
-      },
-      {
-         name: 'ANP排班系統',
-         url: 'https://staff.kfsyscc.org/schedule/anp/',
-         tags: ['專科護理師']
-      },
-      {
-         name: 'ANP預約休假系統',
-         url: 'https://staff.kfsyscc.org/schedule/reservation-day-off/',
-         tags: ['專科護理師']
-      }
-   ]
+            let uniqCategories = _.uniqBy(data.data.data, 'group');
+            AppStore.setObs('categories', _.map(uniqCategories, (url, idx) => {
+               return { name: url.group, color: `hsl( ${idx * 60}, 50%, 45%` };
+            }));
+         }
+      })
+      .catch(e => {
+         console.log('e:', e);
+      })
+}
 
+//按下分類按鈕
+AppStore.setSelectGroup = action((selected_group_name) => {
+   AppStore.select_group = selected_group_name;
+   if (AppStore.select_group !== '') {
+      AppStore.resultUrls = _.filter(AppStore.urls, (val, idx) => (val.group === selected_group_name));
+   } else {
+      AppStore.resultUrls = AppStore.urls;
+   }
 })
-
-
 
 
 export default AppStore

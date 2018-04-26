@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import TopBar from './TopBar';
-import Category from './Category'
+import Search from './Search';
 import AppStore from '../stores/AppStore';
 import styled from 'styled-components';
-const Layout = styled.div`
-  min-height: 100vh;
-  min-width: 560px;
-  max-width: 1210px;
-  margin: 0 auto;
-  padding: 25px 65px;
-  box-sizing: border-box;
-`
+import Groups from './Groups';
+import Urls from './Urls';
+import AppBar from './AppBar';
+import '../css/App.css';
+
+
 class App extends Component {
-  componentWillMount(){
-    AppStore.loadData();
-  }
-  render() {
-    return (
-      <MuiThemeProvider>
-        <Layout>
-          <TopBar style={{marginTop: '20vh', marginBottom: '4vh'}}/>
-          <Category />
-        </Layout>
-      </MuiThemeProvider>
-    );
-  }
+   constructor(props) {
+      super(props);
+      AppStore.getUserInfo();
+   }
+
+   render() {
+      return (
+         <MuiThemeProvider>
+               <AppBar />
+
+            <div className="container">
+               <div className="row secondary_row">
+                  <Groups />
+                  <Search />
+               </div>
+               <Urls />
+            </div>
+         </MuiThemeProvider>
+      );
+   }
 }
 
 export default observer(App);

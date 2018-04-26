@@ -1,0 +1,32 @@
+.container{
+   width: 560px;
+   max-width: 750px;
+   margin: 0 auto;
+}
+@media (min-width: 992px){
+   .container {
+      width: 970px;
+   }
+}
+@media (min-width: 768px){
+   .container {
+      width: 750px;
+   }
+}
+
+
+.Layout{
+   min-height: 100vh;
+   min-width: 560px;
+   max-width: 1155px;
+   margin: 0 auto;
+   padding: 25px 65px;
+   box-sizing: border-box;
+}
+.row{
+   display: flex;
+   align-items: center;
+}
+.secondary_row{
+   justify-content: space-between;
+}

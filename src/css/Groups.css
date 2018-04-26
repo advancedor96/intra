@@ -1,0 +1,13 @@
+.Group{
+   width: 32px;
+   margin-right: 33px;
+   font-size: 14px;
+   color: gray;
+   font-weight: 300;
+   letter-spacing: 2px;
+   cursor: pointer;
+}
+.Group > div{
+   height: 32px;
+   border-radius: 50%;
+}
