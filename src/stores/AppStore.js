@@ -15,7 +15,7 @@ var AppStore = observable({
 
 AppStore.setObs = action((key, value) => {
    AppStore[key] = value;
-   console.log(`AppStore[${key}]:`, AppStore[key]);
+//    console.log(`AppStore[${key}]:`, AppStore[key]);
 })
 
 AppStore.getUserInfo = () => {
