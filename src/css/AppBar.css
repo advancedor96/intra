@@ -2,7 +2,7 @@
    height:45px;
    font-size:22px;
    display: flex;
-   justify-content: space-between;
+	justify-content: space-between;
 }
 .logo{
    cursor: pointer;
@@ -10,11 +10,14 @@
 }
 .User{
    height: 100%;
-	background-color: #493F6B;
 	font-size:20px;
-	color: white;
+	color: black;
 	display: flex;
 	align-items: center;
-	padding: 0 12px;
-	cursor: pointer;
+}
+.logout > a{
+	border: 1px solid black;
+    padding: 3px 6px;
+	 border-radius: 7px;
+	 cursor: pointer;
 }

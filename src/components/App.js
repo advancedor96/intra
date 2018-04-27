@@ -19,7 +19,8 @@ class App extends Component {
    render() {
       return (
          <MuiThemeProvider>
-               <AppBar />
+            <React.Fragment>
+            <AppBar />
 
             <div className="container">
                <div className="row secondary_row">
@@ -28,6 +29,7 @@ class App extends Component {
                </div>
                <Urls />
             </div>
+            </React.Fragment>
          </MuiThemeProvider>
       );
    }

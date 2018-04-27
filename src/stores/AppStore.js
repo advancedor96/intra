@@ -35,7 +35,7 @@ AppStore.getUserInfo = () => {
             AppStore.loadData(json.user.USER_ID);
          } else {
             console.warn('無法取得登入資訊');
-            // window.location.assign('https://staff.kfsyscc.org/signin/index.html?next=' + window.location.href);
+            window.location.assign('https://staff.kfsyscc.org/signin/index.html?next=' + window.location.href);
          }
       })
       .catch((e) => {
