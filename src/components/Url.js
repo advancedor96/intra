@@ -26,7 +26,8 @@ class Url extends Component {
 
             <CardTitle title={this.props.name} 
                subtitle={this.props.url} 
-               onClick={() => { window.location.assign(this.props.url); }} 
+               onClick={() => { window.open(this.props.url, '_blank'); }} 
+               // onClick={() => { window.location.assign(this.props.url); }} 
                titleColor="inherit" 
                subtitleColor="inherit" 
             />
