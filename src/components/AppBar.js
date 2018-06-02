@@ -4,6 +4,7 @@ import AppStore from '../stores/AppStore';
 import styled from 'styled-components';
 import '../css/AppBar.css';
 import Logo from '../images/portalLogo.png';
+import swal from 'sweetalert';
 class AppBar extends Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +13,8 @@ class AppBar extends Component {
 		window.location.reload(true);
 	}
 	handleLogout = ()=>{
-		window.location.assign('https://staff.kfsyscc.org/logout');
+		swal("將跳轉新網址", "https://staff.kfsyscc.org/logout");
+		// window.location.assign('https://staff.kfsyscc.org/logout');
 	}
 
 	render() {

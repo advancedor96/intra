@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import AppStore from '../stores/AppStore';
 import '../css/Url.css';
+import swal from 'sweetalert';
 class Url extends Component {
    constructor(props) {
       super(props);
@@ -26,7 +27,7 @@ class Url extends Component {
 
             <CardTitle title={this.props.name} 
                subtitle={this.props.url} 
-               onClick={() => { window.open(this.props.url, '_blank'); }} 
+               onClick={() => { swal("將啟新分頁"); }} 
                // onClick={() => { window.location.assign(this.props.url); }} 
                titleColor="inherit" 
                subtitleColor="inherit" 
